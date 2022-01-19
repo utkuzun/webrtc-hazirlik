@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebRTC stream</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <main class="main-container">
+      <section class="section flex-col">
+        <h1 class="title">WebRTC video stream</h1>
+        <div class="container">
+          <div class="video-container flex-col">
+            <video id="video" autoplay="true"></video>
+            <div class="btn-container">
+              <button class="btn start-btn">Start</button>
+              <button class="btn end-btn" disabled>End</button>
+            </div>
+          </div>
+          <article class="session-info">
+            <div class="info-section flex-col">
+              <h5 class="info-title">Status:</h5>
+              <p id="status" class="info-text">--</p>
+              <h5 class="info-title">ICEState:</h5>
+              <p id="state" class="info-text">--</p>
+            </div>
+            <!--             <div class="info-section flex-col">
+              <h5 class="info-title">ICE candiate:</h5>
+              <p class="info-text"></p>
+            </div> -->
+          </article>
+        </div>
+      </section>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
