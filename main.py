@@ -37,7 +37,7 @@ def create_local_track(play_from):
                 webcam = MediaPlayer("default:none", format="avfoundation", options=options)
             
             elif platform.system() == "Windows":
-                webcam = MediaPlayer("video=Integrated Camera", format="dshow", options=options)
+                webcam = MediaPlayer("video=USB2.0 HD UVC WebCam", format="dshow", options=options)
             
             else:
                 webcam = MediaPlayer("/dev/video0", format="v4l2", options=options)
@@ -117,7 +117,14 @@ if __name__ == "__main__":
     parser.add_argument("--port", type=int, default=8080, help="Port for HTTP server (default: 8080)")
     parser.add_argument("--play-from", help="Read the media from a file and sent it.")
 
+    parser.add_argument("--verbose", "-v", action="count")
     args = parser.parse_args()
+
+    if args.verbose:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
+
 
     app = web.Application()
     app.on_shutdown.append(on_shutdown)

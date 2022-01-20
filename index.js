@@ -12,7 +12,7 @@ const createPeerConnection = () => {
     // iceServers: [{ urls: ['stun:stun.l.google.com:19302'] }],
   }
 
-  pc = new RTCPeerConnection()
+  pc = new RTCPeerConnection(config)
 
   pc.ontrack = (evt) => {
     console.log('tracking')
@@ -55,10 +55,27 @@ const negotiate = async () => {
   const offer = await pc.createOffer()
 
   await pc.setLocalDescription(offer)
+
+  const waitICE = new Promise(function (resolve) {
+    if (pc.iceGatheringState === 'complete') {
+      resolve()
+    } else {
+      function checkState() {
+        if (pc.iceGatheringState === 'complete') {
+          pc.removeEventListener('icegatheringstatechange', checkState)
+          resolve()
+        }
+      }
+      pc.addEventListener('icegatheringstatechange', checkState)
+    }
+  })
+
+  await waitICE
+
   const response = await fetch('/offer', {
     body: JSON.stringify({
-      sdp: offer.sdp,
-      type: offer.type,
+      sdp: pc.localDescription.sdp,
+      type: pc.localDescription.type,
     }),
     headers: {
       'Content-Type': 'application/json',
