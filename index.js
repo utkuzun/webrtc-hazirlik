@@ -15,11 +15,8 @@ const createPeerConnection = () => {
   pc = new RTCPeerConnection(config)
 
   pc.ontrack = (evt) => {
-    console.log('tracking')
-    console.log(evt)
     if (evt.track.kind == 'video') {
       video.srcObject = evt.streams[0]
-      console.log('play vioe')
     } else {
       video.srcObject = evt.streams[0]
     }
