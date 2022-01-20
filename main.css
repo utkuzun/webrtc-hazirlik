@@ -251,3 +251,13 @@ video {
   align-items: flex-start;
   justify-content: start;
 }
+
+@media screen and (max-width: 800px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
