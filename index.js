@@ -3,6 +3,7 @@ const start = document.querySelector('.start-btn')
 const end = document.querySelector('.end-btn')
 const statusText = document.querySelector('#status')
 const stateText = document.querySelector('#state')
+const errorText = document.querySelector('#error')
 
 var pc = null
 
@@ -85,7 +86,7 @@ const negotiate = async () => {
     console.log(answer)
     await pc.setRemoteDescription(answer)
   } catch (error) {
-    console.log(error)
+    errorText.textContent = 'Failed to connect with server!!!'
   }
 }
 

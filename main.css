@@ -249,6 +249,12 @@ video {
   justify-content: start;
 }
 
+#error {
+  font-size: 0.5rem;
+  color: var(--clr-red-light);
+  font-weight: bold;
+}
+
 @media screen and (max-width: 800px) {
   .title {
     font-size: 2rem;

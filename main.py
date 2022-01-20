@@ -73,39 +73,25 @@ async def offer(request):
             await pc.close()
             pcs.discard(pc)
 
-    audio, video = create_local_track(args.play_from)
 
-    await pc.setRemoteDescription(offer)
+    try:
+        audio, video = create_local_track(args.play_from)
 
-    for t in pc.getTransceivers():
-        if t.kind == "audio" and audio:
-            pc.addTrack(audio)
-        elif t.kind == "video" and video:
-            pc.addTrack(video)
-    
-    answer = await pc.createAnswer()
-    await pc.setLocalDescription(answer)
+        await pc.setRemoteDescription(offer)
 
-    return web.Response(content_type="application/json", text=json.dumps({"sdp": pc.localDescription.sdp, "type": pc.localDescription.type}))
-
-
-
-    # try:
-
-    #     video = create_local_track()
-
-    #     await pc.setRemoteDescription(offer)
-
-    #     pc.addTrack(video)
+        for t in pc.getTransceivers():
+            if t.kind == "audio" and audio:
+                pc.addTrack(audio)
+            elif t.kind == "video" and video:
+                pc.addTrack(video)
         
-    #     answer = await pc.createAnswer()
-    #     await pc.setLocalDescription(answer)
+        answer = await pc.createAnswer()
+        await pc.setLocalDescription(answer)
 
-    #     return web.Response(content_type="application/json", text=json.dumps({"sdp": pc.localDescription.sdp, "type": pc.localDescription.type}))
-
-    # except Exception as err:
-    #     print(err)
-    #     return web.Response(content_type="application/json", text=json.dumps({"msg": "interval server error"}))
+        return web.Response(content_type="application/json", text=json.dumps({"sdp": pc.localDescription.sdp, "type": pc.localDescription.type}))
+    except Exception as err:
+        print(err)
+        return web.Response(content_type="application/json", text=json.dumps({"msg": "interval server error"}))
 
 
 pcs = set()
